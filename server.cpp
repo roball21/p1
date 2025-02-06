@@ -28,6 +28,9 @@
 #include <format>
 #include <thread>
 #include <chrono>
+#include "p1_helper.h"
+
+using namespace std;
 
 #define BACKLOG 10
 #define MAXDATASIZE 100
@@ -62,6 +65,7 @@ std::string toCamelCase(const std::string& input) {
     }
     return output;
 }
+
 
 // Log events with timestamp
 void logEvent(const std::string& message) {
@@ -168,8 +172,9 @@ int main(int argc, char* argv[]) {
             continue;
         }
 
+	// initial connection
         inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr*)&their_addr), s, sizeof s);
-        logEvent("Connection from: " + std::string(s));
+        logEvent("200 HELO " + std::string(s) + " (TCP)");
 
         // Create a new thread to handle the client communication
         std::thread clientThread([new_fd, s]() {

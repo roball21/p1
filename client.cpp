@@ -21,6 +21,8 @@
 #include <format>
 #include <array>
 
+using namespace std;
+
 constexpr size_t MAXDATASIZE = 100;
 
 // Get sockaddr, IPv4 or IPv6
@@ -32,32 +34,41 @@ void* get_in_addr(struct sockaddr* sa) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc!= 2) {
-        std::cerr << "usage: client client.conf\n";
+    if (argc!= 3) {
+	cout << argc << endl;    
+        std::cerr << "usage: HELO <hostname>\n"; //changed fro client client.conf to HELO <host> 
+        return 1;
+    }
+
+    //checking if user used HELO
+    if (strcmp(argv[1], "HELO") != 0) {
+	    std::cerr << "usage: HELO <hostname>\n"; //changed fro client client.conf to HELO <host>
         return 1;
     }
 
     // Read configuration from file
-    std::optional<std::string> serverIP, serverPort;
-    std::filesystem::path configFilePath(argv[1]);
+    std::optional<std::string> serverIP, serverPort, serverHostname;
+    std::filesystem::path configFilePath("client.conf"); //config path changed from argv[1] to "client.conf" 
 
     if (!std::filesystem::is_regular_file(configFilePath)) {
         std::cerr << std::format("Error opening config file: {}\n", *argv);
         return 1;
     }
 
-    std::ifstream configFile(argv[1]);
+    std::ifstream configFile("client.conf");
     std::string line;
     while (std::getline(configFile, line)) {
         if (line.find("SERVER_IP=") == 0) {
             serverIP = line.substr(10);
         } else if (line.find("SERVER_PORT=") == 0) {
             serverPort = line.substr(12);
-        }
-    }
+        } else if (line.find("SERVER_HOSTNAME=") == 0) {
+		serverHostname = line.substr(16);
+	}
+    } // adding in logic for hostname
     configFile.close();
 
-    if (!serverIP.has_value() ||!serverPort.has_value()) {
+    if (!serverIP.has_value() ||!serverPort.has_value() || !serverHostname.has_value()) {
         std::cerr << "Invalid config file format.\n";
         return 1;
     }
@@ -137,4 +148,5 @@ int main(int argc, char* argv[]) {
 
     close(sockfd);
     return 0;
+    
 }
