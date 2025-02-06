@@ -1,0 +1,31 @@
+README
+
+CS447 Spring 2025 P1 Starter Code
+=================================
+Author: Thoshitha Gamage
+Date: January 29, 2025
+
+This directory contains the starter code for the CS447 Spring 2025 P1.
+
+Files:
+  |- server.cpp: Starter code for the server application.
+  |- client.cpp: Starter code for the client application.
+  |- Makefile: Makefile to compile the server and client applications.
+  |- server.conf: Configuration file for the server (port number).
+  |- client.conf: Configuration file for the client (server IP and port).
+  |- games.db: Text file containing the video game database.
+  |- p1_helper.h: Header file for the helper function to load the game database.
+  |- p1_helper.cpp: Implementation of the helper function.
+
+Instructions:
+  1. Compile the server and client applications using the provided Makefile.
+  2. Configure the server.conf and client.conf files with the appropriate port number and server IP address.
+  3. Run the server application.
+  4. Run the client application.
+  5. Follow the specifications in the assignment description to implement the required functionalities.
+
+Notes:
+  -- The server and client starter code currently implement a basic camel case conversion functionality.
+  -- The p1_helper.h and p1_helper.cpp files provide a helper function to load the game database into a vector of Game objects.
+  -- You are free to modify the server.cpp and client.cpp files as needed to complete the assignment.
+  -- Ensure that your code adheres to the coding standards and submission guidelines specified in the assignment description.
